@@ -469,9 +469,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a437a1becdacee24eb45fc24bc7f0cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveRightButton: 100
+  _moveLeftButton: 97
+  _jumpButton: 32
   _acceleration: 30
   _maxSpeed: 20
-  _jumpForce: 5
+  _jumpForce: 10
 --- !u!50 &163275146
 Rigidbody2D:
   serializedVersion: 4

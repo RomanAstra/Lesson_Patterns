@@ -16,6 +16,9 @@ public sealed class MoveCharacter2D : MonoBehaviour
     private Vector2 _movementInput;
     private float _moveHorizontal = 0.0f;
 
+    private Vector2 _velocity;
+    private float _horizontalSpeedNormalized;
+
     private bool _jumpInput;
     private bool _isJumping;
     private bool _isFalling;
@@ -57,18 +60,18 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void UpdateVelocity()
     {
-        var velocity = _controllerRigidbody.velocity;
+        _velocity = _controllerRigidbody.velocity;
 
-        velocity += _movementInput * (_acceleration * Time.fixedDeltaTime);
+        _velocity += _movementInput * (_acceleration * Time.fixedDeltaTime);
 
         _movementInput = Vector2.zero;
 
-        velocity.x = Mathf.Clamp(velocity.x, -_maxSpeed, _maxSpeed);
+        _velocity.x = Mathf.Clamp(_velocity.x, -_maxSpeed, _maxSpeed);
 
-        _controllerRigidbody.velocity = velocity;
+        _controllerRigidbody.velocity = _velocity;
 
-        var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / _maxSpeed;
-        _animatorMove.Move(horizontalSpeedNormalized);
+        _horizontalSpeedNormalized = Mathf.Abs(_velocity.x) / _maxSpeed;
+        _animatorMove.Move(_horizontalSpeedNormalized);
 
         // Play audio
     }

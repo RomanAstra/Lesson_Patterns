@@ -14,8 +14,9 @@ public sealed class MoveCharacter2D : MonoBehaviour
     [SerializeField] private float _jumpForce = 0.0f;
     
     private Vector2 _movementInput;
-    private bool _jumpInput;
+    private float _moveHorizontal = 0.0f;
 
+    private bool _jumpInput;
     private bool _isJumping;
     private bool _isFalling;
 
@@ -27,20 +28,22 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void Update()
     {
-        var moveHorizontal = 0.0f;
-
         if (Input.GetKey(_moveRightButton))
         {
-            moveHorizontal = 1.0f;
+            _moveHorizontal = 1.0f;
             Flip(-1.0f);
         }
         else if (Input.GetKey(_moveLeftButton))
         {
-            moveHorizontal = -1.0f;
+            _moveHorizontal = -1.0f;
             Flip(1.0f);
         }
+        else
+        {
+            _moveHorizontal = 0.0f;
+        }
 
-        _movementInput.Set(moveHorizontal, 0.0f);
+        _movementInput.Set(_moveHorizontal, 0.0f);
 
         if (!_isJumping && Input.GetKeyDown(_jumpButton))
         {

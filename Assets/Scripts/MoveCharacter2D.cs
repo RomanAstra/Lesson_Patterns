@@ -71,6 +71,7 @@ public sealed class MoveCharacter2D : MonoBehaviour
         _controllerRigidbody.velocity = _velocity;
 
         _horizontalSpeedNormalized = Mathf.Abs(_velocity.x) / _maxSpeed;
+
         _animatorMove.Move(_horizontalSpeedNormalized);
 
         // Play audio

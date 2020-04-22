@@ -5,13 +5,11 @@ public sealed class MoveCharacter2D : MonoBehaviour
     private Rigidbody2D _controllerRigidbody;
     private AnimatorMove _animatorMove;
 
-    [SerializeField] private KeyCode _moveRightButton = KeyCode.D;
-    [SerializeField] private KeyCode _moveLeftButton = KeyCode.A;
-    [SerializeField] private KeyCode _jumpButton = KeyCode.Space;
-
     [SerializeField] private float _acceleration = 0.0f;
     [SerializeField] private float _maxSpeed = 0.0f;
     [SerializeField] private float _jumpForce = 0.0f;
+
+    private Inputs _inputs;
     
     private Vector2 _movementInput;
     private float _moveHorizontal = 0.0f;
@@ -29,18 +27,19 @@ public sealed class MoveCharacter2D : MonoBehaviour
     {
         _animatorMove = GetComponent<AnimatorMove>();
         _controllerRigidbody = GetComponent<Rigidbody2D>();
+        _inputs = GetComponent<Inputs>();
     }
 
     private void Update()
     {
         _moveHorizontal = 0.0f;
 
-        if (Input.GetKey(_moveRightButton))
+        if (Input.GetKey(_inputs.MoveRightButton))
         {
             _moveHorizontal = 1.0f;
             Flip(_flipRight);
         }
-        else if (Input.GetKey(_moveLeftButton))
+        else if (Input.GetKey(_inputs.MoveLeftButton))
         {
             _moveHorizontal = -1.0f;
             Flip(_flipLeft);
@@ -48,7 +47,7 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
         _movementInput.Set(_moveHorizontal, 0.0f);
 
-        if (!_isJumping && Input.GetKeyDown(_jumpButton))
+        if (!_isJumping && Input.GetKeyDown(_inputs.JumpButton))
         {
             _jumpInput = true;
         }

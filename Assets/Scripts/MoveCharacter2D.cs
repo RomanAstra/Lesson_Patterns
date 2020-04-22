@@ -27,13 +27,11 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            moveHorizontal = 1.0f;
-            Flip(-1.0f);
+            SetMoveHorizontal(1.0f);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            moveHorizontal = -1.0f;
-            Flip(1.0f);
+            SetMoveHorizontal(-1.0f);
         }
 
         _movementInput.Set(moveHorizontal, 0.0f);
@@ -42,6 +40,12 @@ public sealed class MoveCharacter2D : MonoBehaviour
         {
             _jumpInput = true;
         }
+    }
+
+    private void SetMoveHorizontal(float num)
+    {
+        moveHorizontal = num;
+        Flip(num * -1);
     }
 
     private void FixedUpdate()

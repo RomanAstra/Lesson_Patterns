@@ -15,8 +15,7 @@ namespace DefaultNamespace
             {
                 for (var index = 0; index < _objects.Length; index++)
                 {
-                    var obj = _objects[index];
-                    obj.SetActive(true);
+                    ActivateObject(true);
                 }
             }
         }
@@ -28,9 +27,17 @@ namespace DefaultNamespace
             {
                 for (var index = 0; index < _objects.Length; index++)
                 {
-                    var obj = _objects[index];
-                    obj.SetActive(false);
+                    ActivateObject(false);
                 }
+            }
+        }
+        
+        private void ActivateObject(bool ActiveState)
+        {
+            for (var index = 0; index < _objects.Length; index++)
+            {
+                var obj = _objects[index];
+                obj.SetActive(ActiveState);
             }
         }
     }

@@ -15,6 +15,8 @@ public sealed class MoveCharacter2D : MonoBehaviour
     
     private Vector2 _movementInput;
     private float _moveHorizontal = 0.0f;
+    private float _flipLeft = 1.0f;
+    private float _flipRight = -1.0f;
 
     private Vector2 _velocity;
     private float _horizontalSpeedNormalized;
@@ -36,12 +38,12 @@ public sealed class MoveCharacter2D : MonoBehaviour
         if (Input.GetKey(_moveRightButton))
         {
             _moveHorizontal = 1.0f;
-            Flip(-1.0f);
+            Flip(_flipRight);
         }
         else if (Input.GetKey(_moveLeftButton))
         {
             _moveHorizontal = -1.0f;
-            Flip(1.0f);
+            Flip(_flipLeft);
         }
 
         _movementInput.Set(_moveHorizontal, 0.0f);

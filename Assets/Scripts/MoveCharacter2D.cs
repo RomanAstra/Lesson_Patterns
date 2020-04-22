@@ -28,6 +28,8 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void Update()
     {
+        _moveHorizontal = 0.0f;
+
         if (Input.GetKey(_moveRightButton))
         {
             _moveHorizontal = 1.0f;
@@ -37,10 +39,6 @@ public sealed class MoveCharacter2D : MonoBehaviour
         {
             _moveHorizontal = -1.0f;
             Flip(1.0f);
-        }
-        else
-        {
-            _moveHorizontal = 0.0f;
         }
 
         _movementInput.Set(_moveHorizontal, 0.0f);

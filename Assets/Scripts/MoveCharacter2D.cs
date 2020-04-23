@@ -8,10 +8,18 @@ public sealed class MoveCharacter2D : MonoBehaviour
     [SerializeField] private float _acceleration = 0.0f;
     [SerializeField] private float _maxSpeed = 0.0f;
     [SerializeField] private float _jumpForce = 0.0f;
+
+    private Inputs _inputs;
     
     private Vector2 _movementInput;
-    private bool _jumpInput;
+    private float _moveHorizontal = 0.0f;
+    private float _flipLeft = 1.0f;
+    private float _flipRight = -1.0f;
 
+    private Vector2 _velocity;
+    private float _horizontalSpeedNormalized;
+
+    private bool _jumpInput;
     private bool _isJumping;
     private bool _isFalling;
 
@@ -19,26 +27,27 @@ public sealed class MoveCharacter2D : MonoBehaviour
     {
         _animatorMove = GetComponent<AnimatorMove>();
         _controllerRigidbody = GetComponent<Rigidbody2D>();
+        _inputs = GetComponent<Inputs>();
     }
 
     private void Update()
     {
-        var moveHorizontal = 0.0f;
+        _moveHorizontal = 0.0f;
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(_inputs.MoveRightButton))
         {
-            moveHorizontal = 1.0f;
-            Flip(-1.0f);
+            _moveHorizontal = 1.0f;
+            Flip(_flipRight);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(_inputs.MoveLeftButton))
         {
-            moveHorizontal = -1.0f;
-            Flip(1.0f);
+            _moveHorizontal = -1.0f;
+            Flip(_flipLeft);
         }
 
-        _movementInput.Set(moveHorizontal, 0.0f);
+        _movementInput.Set(_moveHorizontal, 0.0f);
 
-        if (!_isJumping && Input.GetKeyDown(KeyCode.Space))
+        if (!_isJumping && Input.GetKeyDown(_inputs.JumpButton))
         {
             _jumpInput = true;
         }
@@ -52,18 +61,19 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void UpdateVelocity()
     {
-        var velocity = _controllerRigidbody.velocity;
+        _velocity = _controllerRigidbody.velocity;
 
-        velocity += _movementInput * (_acceleration * Time.fixedDeltaTime);
+        _velocity += _movementInput * (_acceleration * Time.fixedDeltaTime);
 
         _movementInput = Vector2.zero;
 
-        velocity.x = Mathf.Clamp(velocity.x, -_maxSpeed, _maxSpeed);
+        _velocity.x = Mathf.Clamp(_velocity.x, -_maxSpeed, _maxSpeed);
 
-        _controllerRigidbody.velocity = velocity;
+        _controllerRigidbody.velocity = _velocity;
 
-        var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / _maxSpeed;
-        _animatorMove.Move(horizontalSpeedNormalized);
+        _horizontalSpeedNormalized = Mathf.Abs(_velocity.x) / _maxSpeed;
+
+        _animatorMove.Move(_horizontalSpeedNormalized);
 
         // Play audio
     }

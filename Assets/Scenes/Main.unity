@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _acceleration: 30
   _maxSpeed: 20
-  _jumpForce: 5
+  _jumpForce: 10
 --- !u!50 &163275146
 Rigidbody2D:
   serializedVersion: 4
@@ -534,6 +534,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c96094c000140d99b14ef2d450f5711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &163275150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163275143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8aed50bc3eeab44b49425777ba270f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveRightButton: 100
+  MoveLeftButton: 97
+  JumpButton: 32
 --- !u!1 &184906207
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,11 +13,7 @@ namespace DefaultNamespace
         {
             if (collision.CompareTag(TagManager.GetTag(_tagType)))
             {
-                for (var index = 0; index < _objects.Length; index++)
-                {
-                    var obj = _objects[index];
-                    obj.SetActive(true);
-                }
+                Activation(true);
             }
         }
 
@@ -26,11 +22,16 @@ namespace DefaultNamespace
         {
             if (_deactivateOnExit && collision.CompareTag(TagManager.GetTag(_tagType)))
             {
-                for (var index = 0; index < _objects.Length; index++)
-                {
-                    var obj = _objects[index];
-                    obj.SetActive(false);
-                }
+                Activation(false);
+            }
+        }
+
+        private void Activation(bool ActiveObj)
+        {
+            for (var index = 0; index < _objects.Length; index++)
+            {
+                var obj = _objects[index];
+                obj.SetActive(ActiveObj);
             }
         }
     }

@@ -8,6 +8,7 @@ public sealed class MoveCharacter2D : MonoBehaviour
     [SerializeField] private float _acceleration = 0.0f;
     [SerializeField] private float _maxSpeed = 0.0f;
     [SerializeField] private float _jumpForce = 0.0f;
+    [SerializeField] private float _moveHorizontal = 0.0f;
     
     private Vector2 _movementInput;
     private bool _jumpInput;
@@ -23,21 +24,6 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void Update()
     {
-        var moveHorizontal = 0.0f;
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveHorizontal = 1.0f;
-            Flip(-1.0f);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            moveHorizontal = -1.0f;
-            Flip(1.0f);
-        }
-
-        _movementInput.Set(moveHorizontal, 0.0f);
-
         if (!_isJumping && Input.GetKeyDown(KeyCode.Space))
         {
             _jumpInput = true;
@@ -46,8 +32,25 @@ public sealed class MoveCharacter2D : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Input.GetKey(KeyCode.D))
+        {
+            Direction(1.0f);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            Direction(-1.0f);
+        }
+
+        _movementInput.Set(_moveHorizontal, 0.0f);
+
         UpdateVelocity();
         UpdateJump();
+    }
+
+    private void Direction(float val)
+    {
+        _moveHorizontal = val;
+        Flip(val * -1);
     }
 
     private void UpdateVelocity()
